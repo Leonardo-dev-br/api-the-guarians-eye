@@ -1,0 +1,2 @@
+org.springframework.boot.env.EnvironmentPostProcessor=\
+montclio.theGuardiansEye.config.DotenvEnvironmentPostProcessor
