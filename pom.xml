@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.5.0</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>montclio</groupId>
 	<artifactId>theGuardiansEye</artifactId>
@@ -60,10 +60,10 @@
 		<groupId>com.oracle.database.jdbc</groupId>
 		<artifactId>ojdbc8</artifactId>
 	</dependency>
-	<dependency>
+	<!-- <dependency>
 		<groupId>org.flywaydb</groupId>
 		<artifactId>flyway-database-oracle</artifactId>
-	</dependency>
+	</dependency> -->
 	<dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-devtools</artifactId>
