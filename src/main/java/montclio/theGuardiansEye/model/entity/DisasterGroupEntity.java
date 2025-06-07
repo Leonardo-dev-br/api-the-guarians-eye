@@ -26,9 +26,6 @@ public class DisasterGroupEntity {
         return idDisasterGroup;
     }
 
-    public Long getIdSubGroup() {
-        return idSubGroup;
-    }
 
     public void setIdSubGroup(Long idSubGroup) {
         this.idSubGroup = idSubGroup;
