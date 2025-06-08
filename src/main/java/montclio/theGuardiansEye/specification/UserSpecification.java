@@ -1,31 +1,29 @@
 package montclio.theGuardiansEye.specification;
 
-import java.time.LocalDate;
-
 import org.springframework.data.jpa.domain.Specification;
 
 import jakarta.persistence.criteria.Predicate;
-import montclio.theGuardiansEye.model.entity.CapturedImageEntity;
+import montclio.theGuardiansEye.model.entity.UserEntity;
 
 public class UserSpecification {
 
-    public static Specification<CapturedImageEntity> withFilters(Long zonaId, LocalDate dataInicio, LocalDate dataFim) {
+public static Specification<UserEntity> withFilters(
+        Long idUser,
+        String firstName,
+        String lastName
+    ) {
         return (root, query, cb) -> {
-            Predicate predicate = cb.conjunction();
-
-            if (zonaId != null) {
-                predicate = cb.and(predicate, cb.equal(root.get("zona").get("id"), zonaId));
+            Predicate p = cb.conjunction();
+            if (idUser != null) {
+                p = cb.and(p, cb.equal(root.get("idUser"), idUser));
             }
-
-            if (dataInicio != null) {
-                predicate = cb.and(predicate, cb.greaterThanOrEqualTo(root.get("dataCaptura"), dataInicio));
+            if (firstName != null && !firstName.isBlank()) {
+                p = cb.and(p, cb.like(cb.lower(root.get("Primeiro nome")), "%" + firstName.toLowerCase() + "%"));
             }
-
-            if (dataFim != null) {
-                predicate = cb.and(predicate, cb.lessThanOrEqualTo(root.get("dataCaptura"), dataFim));
+            if (lastName != null && !lastName.isBlank()) {
+                p = cb.and(p, cb.like(cb.lower(root.get("Sobrenome")), "%" + lastName.toLowerCase() + "%"));
             }
-
-            return predicate;
+            return p;
         };
     }
 }

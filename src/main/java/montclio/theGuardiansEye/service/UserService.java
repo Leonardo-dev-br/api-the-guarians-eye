@@ -1,9 +1,8 @@
 package montclio.theGuardiansEye.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -11,6 +10,7 @@ import montclio.theGuardiansEye.model.dto.UserDTO;
 import montclio.theGuardiansEye.model.entity.UserEntity;
 import montclio.theGuardiansEye.model.mapper.UserMapper;
 import montclio.theGuardiansEye.model.repository.UserRepository;
+import montclio.theGuardiansEye.specification.UserSpecification;
 
 @Service
 public class UserService  {
@@ -22,11 +22,18 @@ public class UserService  {
         this.repository = repository;
     }
 
-    public List<UserDTO> getAllUsers() {
-        return repository.findAll()
-                .stream()
-                .map(UserMapper::toDTO)
-                .collect(Collectors.toList());
+    public Page<UserDTO> getAllUsers(
+        Long idUser,
+        String firstName,
+        String lastName,
+        Pageable pageable
+    ) {
+        return repository
+            .findAll(
+                UserSpecification.withFilters(idUser, firstName, lastName),
+                pageable
+            )
+            .map(UserMapper::toDTO);
     }
 
     public UserDTO findById(Long id) {

@@ -24,12 +24,10 @@ public class CapturedImageService  {
         this.repository = repository;
     }
 
-    public Page<CapturedImageDTO> getAllWithFilters(Long zonaId, String dataInicio, String dataFim, Pageable pageable) {
-        LocalDate start = (dataInicio != null) ? LocalDate.parse(dataInicio) : null;
-        LocalDate end = (dataFim != null) ? LocalDate.parse(dataFim) : null;
-
+    public Page<CapturedImageDTO> getAllWithFilters(Long idImage, String hosting, String size, Pageable pageable) {
+    
         return repository.findAll(
-            CapturedImageSpecification.withFilters(zonaId, start, end), pageable
+            CapturedImageSpecification.withFilters(idImage, hosting, size), pageable
         ).map(CapturedImageMapper::toDTO);
     }
 

@@ -1,8 +1,11 @@
 package montclio.theGuardiansEye.controller;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,14 +34,16 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    @Operation(summary = "Listar todos os usuários",
-               description = "Retorna uma lista de todos os usuários cadastrados no sistema.")
-    @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Lista de usuários retornada com sucesso")
-    })
-    public ResponseEntity<List<UserDTO>> getAll() {
-        List<UserDTO> dtos = userService.getAllUsers();
-        return ResponseEntity.ok(dtos);
+    @Operation(summary = "Listar usuários com filtros, ordenação e paginação")
+    public ResponseEntity<Page<UserDTO>> getAll(
+        @RequestParam(required = false) Long idUser,
+        @RequestParam(required = false) String firstName,
+        @RequestParam(required = false) String lastName,
+        @PageableDefault(page = 0, size = 2, sort = "idUser", direction = Sort.Direction.DESC)
+        Pageable pageable
+    ) {
+        Page<UserDTO> page = userService.getAllUsers(idUser, firstName, lastName, pageable);
+        return ResponseEntity.ok(page);
     }
 
     @GetMapping("/{id}")

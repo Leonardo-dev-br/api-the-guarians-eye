@@ -38,12 +38,12 @@ public class CapturedImageController {
         @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso")
     })
     public ResponseEntity<Page<CapturedImageDTO>> getAllWithPagination(
-    @Parameter(description = "ID da zona (opcional)") @RequestParam(required = false) Long zonaId,
-    @Parameter(description = "Data mínima de captura (yyyy-MM-dd, opcional)") @RequestParam(required = false) String dataInicio,
-    @Parameter(description = "Data máxima de captura (yyyy-MM-dd, opcional)") @RequestParam(required = false) String dataFim,
-    @Parameter(hidden = true) @PageableDefault(size = 10, sort = "id") Pageable pageable
+    @Parameter(description = "ID da imagem") @RequestParam(required = false) Long idImage,
+    @Parameter(description = "Está hospedada em: ") @RequestParam(required = false) String hosting,
+    @Parameter(description = "Com o tamanho: ") @RequestParam(required = false) String size,
+    @Parameter(hidden = true) @PageableDefault(size = 4, sort = "id") Pageable pageable
 ) {
-    Page<CapturedImageDTO> page = CapturedImageService.getAllWithFilters(zonaId, dataInicio, dataFim, pageable);
+    Page<CapturedImageDTO> page = CapturedImageService.getAllWithFilters(idImage, hosting, size, pageable);
     return ResponseEntity.ok(page);
 }
 

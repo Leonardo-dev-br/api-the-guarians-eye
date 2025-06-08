@@ -1,6 +1,5 @@
 package montclio.theGuardiansEye.specification;
 
-import java.time.LocalDate;
 
 import org.springframework.data.jpa.domain.Specification;
 
@@ -9,20 +8,20 @@ import montclio.theGuardiansEye.model.entity.CapturedImageEntity;
 
 public class CapturedImageSpecification {
 
-    public static Specification<CapturedImageEntity> withFilters(Long zonaId, LocalDate dataInicio, LocalDate dataFim) {
+    public static Specification<CapturedImageEntity> withFilters(Long idImage, String hosting, String size) {
         return (root, query, cb) -> {
             Predicate predicate = cb.conjunction();
 
-            if (zonaId != null) {
-                predicate = cb.and(predicate, cb.equal(root.get("zona").get("id"), zonaId));
+            if (idImage != null) {
+                predicate = cb.and(predicate, cb.equal(root.get("zona").get("id"), idImage));
             }
 
-            if (dataInicio != null) {
-                predicate = cb.and(predicate, cb.greaterThanOrEqualTo(root.get("dataCaptura"), dataInicio));
+            if (hosting != null) {
+                predicate = cb.and(predicate, cb.greaterThanOrEqualTo(root.get("dataCaptura"), hosting));
             }
 
-            if (dataFim != null) {
-                predicate = cb.and(predicate, cb.lessThanOrEqualTo(root.get("dataCaptura"), dataFim));
+            if (size != null) {
+                predicate = cb.and(predicate, cb.lessThanOrEqualTo(root.get("dataCaptura"), size));
             }
 
             return predicate;
