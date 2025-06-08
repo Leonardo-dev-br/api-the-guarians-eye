@@ -29,6 +29,14 @@ public class SubgroupService  {
                 .collect(Collectors.toList());
     }
 
+    public SubGroupDTO findById(Long id) {
+        SubgroupDisasterEntity entity = repository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException(
+                "Sub Group de desastre com ID " + id + " não encontrado"));
+
+        return SubgroupMapper.toDTO(entity);
+    }
+
     public SubGroupDTO updateSubGroup(Long id, SubGroupDTO dto) {
         SubgroupDisasterEntity 
         existing = repository.findById(id)

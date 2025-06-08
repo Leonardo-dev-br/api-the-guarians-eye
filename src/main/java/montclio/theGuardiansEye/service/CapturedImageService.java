@@ -29,11 +29,19 @@ public class CapturedImageService  {
                 .collect(Collectors.toList());
     }
 
+    public CapturedImageDTO findById(Long id) {
+        CapturedImageEntity entity = repository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException(
+                "Imagem com ID " + id + " não encontrado"));
+
+        return CapturedImageMapper.toDTO(entity);
+    }
+
     public CapturedImageDTO updateCapturedImage(Long id, CapturedImageDTO dto) {
         CapturedImageEntity 
         existing = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
-                        "Imagem Capturada com ID " + id + " não encontrado"));
+                        "Imagem com ID " + id + " não encontrado"));
 
         CapturedImageEntity saved = repository.save(existing);
         return CapturedImageMapper.toDTO(saved);

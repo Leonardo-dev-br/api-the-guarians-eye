@@ -29,6 +29,14 @@ public class LocalService  {
                 .collect(Collectors.toList());
     }
 
+    public LocalDTO findById(Long id) {
+        LocalEntity entity = repository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException(
+                "Local de desastre com ID " + id + " não encontrado"));
+
+        return LocalMapper.toDTO(entity);
+    }
+
     public LocalDTO updateLocal(Long id, LocalDTO dto) {
         LocalEntity 
         existing = repository.findById(id)

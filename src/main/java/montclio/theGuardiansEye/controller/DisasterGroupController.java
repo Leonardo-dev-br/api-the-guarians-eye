@@ -21,9 +21,11 @@ public class DisasterGroupController {
 
     //Pegando por ID
     @GetMapping("/{id}")
-    public ResponseEntity<DisasterGroupDTO> getDisasterGroupById(@PathVariable Long id) {
-        return ResponseEntity.ok(disasterGroupService.getDisasterGroupById(id));
+    public ResponseEntity<DisasterGroupDTO> getById(@PathVariable Long id) {
+        DisasterGroupDTO dto = disasterGroupService.findById(id);
+        return ResponseEntity.ok(dto);
     }
+
 
     //Atualizando por ID
 

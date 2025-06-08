@@ -29,6 +29,14 @@ public class VantService  {
                 .collect(Collectors.toList());
     }
 
+    public VantDTO findById(Long id) {
+        VantEntity entity = repository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException(
+                "Vant com ID " + id + " não encontrado"));
+
+        return VantMapper.toDTO(entity);
+    }
+
     public VantDTO updateVant(Long id, VantDTO dto) {
         VantEntity 
         existing = repository.findById(id)

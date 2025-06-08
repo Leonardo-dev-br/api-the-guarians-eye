@@ -29,6 +29,14 @@ public class SensorService  {
                 .collect(Collectors.toList());
     }
 
+    public SensorDTO findById(Long id) {
+        SensorEntity entity = repository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException(
+                "Sensor com ID " + id + " não encontrado"));
+
+        return SensorMapper.toDTO(entity);
+    }
+
     public SensorDTO updateSensor(Long id, SensorDTO dto) {
         SensorEntity 
         existing = repository.findById(id)

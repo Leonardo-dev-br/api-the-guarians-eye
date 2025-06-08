@@ -29,6 +29,14 @@ public class DisasterSensorService  {
                 .collect(Collectors.toList());
     }
 
+    public DisasterSensorDTO findById(Long id) {
+        DisasterSensorEntity entity = repository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException(
+                "Sensor com ID " + id + " não encontrado"));
+
+        return DisasterSensorMapper.toDTO(entity);
+    }
+
     public DisasterSensorDTO updateDisasterSensor(Long id, DisasterSensorDTO dto) {
         DisasterSensorEntity 
         existing = repository.findById(id)

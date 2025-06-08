@@ -29,6 +29,14 @@ public class UserService  {
                 .collect(Collectors.toList());
     }
 
+    public UserDTO findById(Long id) {
+        UserEntity entity = repository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException(
+                "Usuário com ID " + id + " não encontrado"));
+
+        return UserMapper.toDTO(entity);
+    }
+
     public UserDTO updateUser(Long id, UserDTO dto) {
         UserEntity 
         existing = repository.findById(id)

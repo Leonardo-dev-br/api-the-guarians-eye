@@ -29,6 +29,14 @@ public class ImpactRatingService  {
                 .collect(Collectors.toList());
     }
 
+    public ImpactRatingDTO findById(Long id) {
+        ImpactRatingEntity entity = repository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException(
+                "Classificação de Impacto com ID " + id + " não encontrado"));
+
+        return ImpactRatingMapper.toDTO(entity);
+    }
+
     public ImpactRatingDTO updateImpactRating(Long id, ImpactRatingDTO dto) {
         ImpactRatingEntity 
         existing = repository.findById(id)

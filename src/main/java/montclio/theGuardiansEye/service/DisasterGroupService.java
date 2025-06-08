@@ -29,6 +29,15 @@ public class DisasterGroupService {
                 .collect(Collectors.toList());
     }
 
+    public DisasterGroupDTO findById(Long id) {
+        DisasterGroupEntity entity = repository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException(
+                "Grupo de desastre com ID " + id + " não encontrado"));
+
+        return DisasterGroupMapper.toDTO(entity);
+    }
+
+
     public DisasterGroupDTO updateGroup(Long id, DisasterGroupDTO dto) {
     DisasterGroupEntity existing = repository.findById(id)
         .orElseThrow(() -> new EntityNotFoundException(
