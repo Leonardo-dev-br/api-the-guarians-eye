@@ -7,42 +7,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
-import montclio.theGuardiansEye.model.dto.CapturedImageDTO;
-import montclio.theGuardiansEye.model.entity.CapturedImageEntity;
-import montclio.theGuardiansEye.model.mapper.CapturedImageMapper;
-import montclio.theGuardiansEye.model.repository.CapturedImageRepository;
+import montclio.theGuardiansEye.model.dto.SubGroupDTO;
+import montclio.theGuardiansEye.model.entity.SubgroupDisasterEntity;
+import montclio.theGuardiansEye.model.mapper.SubgroupMapper;
+import montclio.theGuardiansEye.model.repository.SubgroupRepository;
 
 @Service
-public class CapturedImageService  {
+public class SubgroupService  {
 
-    private final CapturedImageRepository repository;
+    private final SubgroupRepository repository;
 
     @Autowired
-    public CapturedImageService (CapturedImageRepository repository) {
+    public SubgroupService (SubgroupRepository repository) {
         this.repository = repository;
     }
 
-    public List<CapturedImageDTO> getAllGroups() {
+    public List<SubGroupDTO> getAllSubGroups() {
         return repository.findAll()
                 .stream()
-                .map(CapturedImageMapper::toDTO)
+                .map(SubgroupMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
-    public CapturedImageDTO updateGroup(Long id, CapturedImageDTO dto) {
-        CapturedImageEntity 
+    public SubGroupDTO updateSubGroup(Long id, SubGroupDTO dto) {
+        SubgroupDisasterEntity 
         existing = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
-                        "Imagem Capturada com ID " + id + " não encontrado"));
+                        "Subgrupo com ID " + id + " não encontrado"));
 
-        CapturedImageEntity saved = repository.save(existing);
-        return CapturedImageMapper.toDTO(saved);
+        SubgroupDisasterEntity saved = repository.save(existing);
+        return SubgroupMapper.toDTO(saved);
     }
 
-    public void deleteGroup(Long id) {
+    public void deleteSubGroup(Long id) {
         if (!repository.existsById(id)) {
             throw new EntityNotFoundException(
-                    "Imagem com ID " + id + " não encontrado");
+                    "Subgrupo com ID " + id + " não encontrado");
         }
         repository.deleteById(id);
     }

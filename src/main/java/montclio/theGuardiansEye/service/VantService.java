@@ -7,42 +7,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
-import montclio.theGuardiansEye.model.dto.CapturedImageDTO;
-import montclio.theGuardiansEye.model.entity.CapturedImageEntity;
-import montclio.theGuardiansEye.model.mapper.CapturedImageMapper;
-import montclio.theGuardiansEye.model.repository.CapturedImageRepository;
+import montclio.theGuardiansEye.model.dto.VantDTO;
+import montclio.theGuardiansEye.model.entity.VantEntity;
+import montclio.theGuardiansEye.model.mapper.VantMapper;
+import montclio.theGuardiansEye.model.repository.VantRepository;
 
 @Service
-public class CapturedImageService  {
+public class VantService  {
 
-    private final CapturedImageRepository repository;
+    private final VantRepository repository;
 
     @Autowired
-    public CapturedImageService (CapturedImageRepository repository) {
+    public VantService (VantRepository repository) {
         this.repository = repository;
     }
 
-    public List<CapturedImageDTO> getAllGroups() {
+    public List<VantDTO> getAllVants() {
         return repository.findAll()
                 .stream()
-                .map(CapturedImageMapper::toDTO)
+                .map(VantMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
-    public CapturedImageDTO updateGroup(Long id, CapturedImageDTO dto) {
-        CapturedImageEntity 
+    public VantDTO updateVant(Long id, VantDTO dto) {
+        VantEntity 
         existing = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
-                        "Imagem Capturada com ID " + id + " não encontrado"));
+                        "VANT com ID " + id + " não encontrado"));
 
-        CapturedImageEntity saved = repository.save(existing);
-        return CapturedImageMapper.toDTO(saved);
+        VantEntity saved = repository.save(existing);
+        return VantMapper.toDTO(saved);
     }
 
-    public void deleteGroup(Long id) {
+    public void deleteVant(Long id) {
         if (!repository.existsById(id)) {
             throw new EntityNotFoundException(
-                    "Imagem com ID " + id + " não encontrado");
+                    "VANT com ID " + id + " não encontrado");
         }
         repository.deleteById(id);
     }

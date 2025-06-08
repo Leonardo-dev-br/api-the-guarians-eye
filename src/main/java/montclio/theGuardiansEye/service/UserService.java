@@ -7,42 +7,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
-import montclio.theGuardiansEye.model.dto.CapturedImageDTO;
-import montclio.theGuardiansEye.model.entity.CapturedImageEntity;
-import montclio.theGuardiansEye.model.mapper.CapturedImageMapper;
-import montclio.theGuardiansEye.model.repository.CapturedImageRepository;
+import montclio.theGuardiansEye.model.dto.UserDTO;
+import montclio.theGuardiansEye.model.entity.UserEntity;
+import montclio.theGuardiansEye.model.mapper.UserMapper;
+import montclio.theGuardiansEye.model.repository.UserRepository;
 
 @Service
-public class CapturedImageService  {
+public class UserService  {
 
-    private final CapturedImageRepository repository;
+    private final UserRepository repository;
 
     @Autowired
-    public CapturedImageService (CapturedImageRepository repository) {
+    public UserService (UserRepository repository) {
         this.repository = repository;
     }
 
-    public List<CapturedImageDTO> getAllGroups() {
+    public List<UserDTO> getAllUsers() {
         return repository.findAll()
                 .stream()
-                .map(CapturedImageMapper::toDTO)
+                .map(UserMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
-    public CapturedImageDTO updateGroup(Long id, CapturedImageDTO dto) {
-        CapturedImageEntity 
+    public UserDTO updateUser(Long id, UserDTO dto) {
+        UserEntity 
         existing = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
-                        "Imagem Capturada com ID " + id + " não encontrado"));
+                        "Usuário com ID " + id + " não encontrado"));
 
-        CapturedImageEntity saved = repository.save(existing);
-        return CapturedImageMapper.toDTO(saved);
+        UserEntity saved = repository.save(existing);
+        return UserMapper.toDTO(saved);
     }
 
-    public void deleteGroup(Long id) {
+    public void deleteUser(Long id) {
         if (!repository.existsById(id)) {
             throw new EntityNotFoundException(
-                    "Imagem com ID " + id + " não encontrado");
+                    "Usuário com ID " + id + " não encontrado");
         }
         repository.deleteById(id);
     }
