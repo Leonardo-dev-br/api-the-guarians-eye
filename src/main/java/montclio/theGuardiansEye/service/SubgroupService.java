@@ -37,6 +37,12 @@ public class SubgroupService  {
         return SubgroupMapper.toDTO(entity);
     }
 
+    public SubGroupDTO createSubgroup(SubGroupDTO dto) {
+        SubgroupDisasterEntity entity = SubgroupMapper.toEntity(dto);
+        SubgroupDisasterEntity saved = repository.save(entity);
+        return SubgroupMapper.toDTO(saved);
+    }
+
     public SubGroupDTO updateSubGroup(Long id, SubGroupDTO dto) {
         SubgroupDisasterEntity 
         existing = repository.findById(id)

@@ -37,6 +37,13 @@ public class UserService  {
         return UserMapper.toDTO(entity);
     }
 
+    public UserDTO createUser(UserDTO dto) {
+        UserEntity entity = UserMapper.toEntity(dto);
+        UserEntity saved = repository.save(entity);
+        return UserMapper.toDTO(saved);
+    }
+
+
     public UserDTO updateUser(Long id, UserDTO dto) {
         UserEntity 
         existing = repository.findById(id)

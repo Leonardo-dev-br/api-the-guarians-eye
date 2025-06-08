@@ -37,6 +37,12 @@ public class SensorService  {
         return SensorMapper.toDTO(entity);
     }
 
+    public SensorDTO createGroupSensor(SensorDTO dto) {
+        SensorEntity entity = SensorMapper.toEntity(dto);
+        SensorEntity saved = repository.save(entity);
+        return SensorMapper.toDTO(saved);
+    }
+
     public SensorDTO updateSensor(Long id, SensorDTO dto) {
         SensorEntity 
         existing = repository.findById(id)

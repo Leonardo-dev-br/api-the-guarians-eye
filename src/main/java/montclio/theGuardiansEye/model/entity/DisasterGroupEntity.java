@@ -26,6 +26,10 @@ public class DisasterGroupEntity {
         return idDisasterGroup;
     }
 
+    public Long getIdSubGroup() {
+        return idSubGroup;
+    }
+
 
     public void setIdSubGroup(Long idSubGroup) {
         this.idSubGroup = idSubGroup;
@@ -38,6 +42,7 @@ public class DisasterGroupEntity {
     public void setGroup(String group) {
         this.group = group;
     }
+
 
 }
 

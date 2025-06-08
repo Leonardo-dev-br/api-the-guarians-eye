@@ -37,6 +37,12 @@ public class DisasterSensorService  {
         return DisasterSensorMapper.toDTO(entity);
     }
 
+    public DisasterSensorDTO createDisasterSensor(DisasterSensorDTO dto) {
+        DisasterSensorEntity entity = DisasterSensorMapper.toEntity(dto);
+        DisasterSensorEntity saved = repository.save(entity);
+        return DisasterSensorMapper.toDTO(saved);
+    }
+
     public DisasterSensorDTO updateDisasterSensor(Long id, DisasterSensorDTO dto) {
         DisasterSensorEntity 
         existing = repository.findById(id)

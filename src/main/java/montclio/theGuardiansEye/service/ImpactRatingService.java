@@ -37,6 +37,12 @@ public class ImpactRatingService  {
         return ImpactRatingMapper.toDTO(entity);
     }
 
+    public ImpactRatingDTO createImpactRating(ImpactRatingDTO dto) {
+        ImpactRatingEntity entity = ImpactRatingMapper.toEntity(dto);
+        ImpactRatingEntity saved = repository.save(entity);
+        return ImpactRatingMapper.toDTO(saved);
+    }
+
     public ImpactRatingDTO updateImpactRating(Long id, ImpactRatingDTO dto) {
         ImpactRatingEntity 
         existing = repository.findById(id)

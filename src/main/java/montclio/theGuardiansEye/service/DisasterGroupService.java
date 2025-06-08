@@ -37,6 +37,12 @@ public class DisasterGroupService {
         return DisasterGroupMapper.toDTO(entity);
     }
 
+    public DisasterGroupDTO createGroup(DisasterGroupDTO dto) {
+        DisasterGroupEntity entity = DisasterGroupMapper.toEntity(dto);
+        DisasterGroupEntity saved = repository.save(entity);
+        return DisasterGroupMapper.toDTO(saved);
+    }
+
 
     public DisasterGroupDTO updateGroup(Long id, DisasterGroupDTO dto) {
     DisasterGroupEntity existing = repository.findById(id)

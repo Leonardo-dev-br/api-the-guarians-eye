@@ -37,6 +37,12 @@ public class CapturedImageService  {
         return CapturedImageMapper.toDTO(entity);
     }
 
+    public CapturedImageDTO createCapturedImage(CapturedImageDTO dto) {
+        CapturedImageEntity entity = CapturedImageMapper.toEntity(dto);
+        CapturedImageEntity saved = repository.save(entity);
+        return CapturedImageMapper.toDTO(saved);
+    }
+
     public CapturedImageDTO updateCapturedImage(Long id, CapturedImageDTO dto) {
         CapturedImageEntity 
         existing = repository.findById(id)

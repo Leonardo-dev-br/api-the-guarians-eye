@@ -37,6 +37,12 @@ public class VantService  {
         return VantMapper.toDTO(entity);
     }
 
+    public VantDTO createVant(VantDTO dto) {
+        VantEntity entity = VantMapper.toEntity(dto);
+        VantEntity saved = repository.save(entity);
+        return VantMapper.toDTO(saved);
+    }
+    
     public VantDTO updateVant(Long id, VantDTO dto) {
         VantEntity 
         existing = repository.findById(id)

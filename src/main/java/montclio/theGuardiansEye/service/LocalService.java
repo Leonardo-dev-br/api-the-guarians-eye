@@ -37,6 +37,12 @@ public class LocalService  {
         return LocalMapper.toDTO(entity);
     }
 
+    public LocalDTO createLocal(LocalDTO dto) {
+        LocalEntity entity = LocalMapper.toEntity(dto);
+        LocalEntity saved = repository.save(entity);
+        return LocalMapper.toDTO(saved);
+    }
+
     public LocalDTO updateLocal(Long id, LocalDTO dto) {
         LocalEntity 
         existing = repository.findById(id)
