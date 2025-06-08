@@ -22,7 +22,7 @@ import montclio.theGuardiansEye.model.dto.DisasterSensorDTO;
 import montclio.theGuardiansEye.service.DisasterSensorService;
 
 @RestController
-@RequestMapping("/disaster-sensor-controller")
+@RequestMapping("/disaster-sensor")
 @Tag(name = "Sensores de Desastre", description = "Operações para gerenciamento dos sensores de monitoramento de desastres")
 public class DisasterSensorController {
 

@@ -1,9 +1,9 @@
 package montclio.theGuardiansEye.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -22,11 +22,9 @@ public class DisasterGroupService {
         this.repository = repository;
     }
 
-    public List<DisasterGroupDTO> getAllGroups() {
-        return repository.findAll()
-                .stream()
-                .map(DisasterGroupMapper::toDTO)
-                .collect(Collectors.toList());
+    public Page<DisasterGroupDTO> getAllGroups(Pageable pageable) {
+        return repository.findAll(pageable)
+                .map(DisasterGroupMapper::toDTO);
     }
 
     public DisasterGroupDTO findById(Long id) {

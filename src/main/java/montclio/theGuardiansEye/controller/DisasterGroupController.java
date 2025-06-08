@@ -1,8 +1,11 @@
 package montclio.theGuardiansEye.controller;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,11 +31,12 @@ public class DisasterGroupController {
     private DisasterGroupService disasterGroupService;
 
     @GetMapping
-    @Operation(summary = "Listar todos os grupos de desastres", description = "Retorna uma lista com todos os grupos de desastres cadastrados.")
-    public ResponseEntity<List<DisasterGroupDTO>> getAll() {
-        List<DisasterGroupDTO> dtos = disasterGroupService.getAllGroups();
-        return ResponseEntity.ok(dtos);
+    @Operation(summary = "Listar todos os grupos de desastres", description = "Retorna uma lista paginada e ordenada de grupos de desastres.")
+    public ResponseEntity<Page<DisasterGroupDTO>> getAll(
+            @PageableDefault(page = 0, size = 3, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+        return ResponseEntity.ok(disasterGroupService.getAllGroups(pageable));
     }
+
 
     @GetMapping("/{id}")
     @Operation(summary = "Buscar grupo de desastre por ID", description = "Retorna os dados de um grupo de desastre específico com base no ID fornecido.")

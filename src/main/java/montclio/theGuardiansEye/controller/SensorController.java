@@ -22,7 +22,7 @@ import montclio.theGuardiansEye.model.dto.SensorDTO;
 import montclio.theGuardiansEye.service.SensorService;
 
 @RestController
-@RequestMapping("/sensor-controller")
+@RequestMapping("/sensor")
 @Tag(name = "Sensores", description = "Endpoints para gerenciamento de sensores genéricos")
 public class SensorController {
 
