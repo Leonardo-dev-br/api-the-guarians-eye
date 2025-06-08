@@ -13,48 +13,48 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import montclio.theGuardiansEye.model.dto.DisasterGroupDTO;
-import montclio.theGuardiansEye.service.DisasterGroupService;
+import montclio.theGuardiansEye.model.dto.UserDTO;
+import montclio.theGuardiansEye.service.UserService;
 
 @RestController
-@RequestMapping("/disaster-group")
-public class DisasterGroupController {
+@RequestMapping("/user")
+public class UserController {
 
     @Autowired
-    private DisasterGroupService disasterGroupService;
+    private UserService UserService;
 
     
     @GetMapping
-    public ResponseEntity<List<DisasterGroupDTO>> getAll() {
-        List<DisasterGroupDTO> dtos = disasterGroupService.getAllGroups();
+    public ResponseEntity<List<UserDTO>> getAll() {
+        List<UserDTO> dtos = UserService.getAllUsers();
         return ResponseEntity.ok(dtos);
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<DisasterGroupDTO> getById(@PathVariable Long id) {
-        DisasterGroupDTO dto = disasterGroupService.findById(id);
+    public ResponseEntity<UserDTO> getById(@PathVariable Long id) {
+        UserDTO dto = UserService.findById(id);
         return ResponseEntity.ok(dto);
     }
 
     
     @PostMapping
-    public ResponseEntity<DisasterGroupDTO> create(@RequestBody DisasterGroupDTO dto) {
-        DisasterGroupDTO created = disasterGroupService.createGroup(dto);
+    public ResponseEntity<UserDTO> create(@RequestBody UserDTO dto) {
+        UserDTO created = UserService.createUser(dto);
         return ResponseEntity.ok(created);
     }
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<DisasterGroupDTO> update(@PathVariable Long id, @RequestBody DisasterGroupDTO dto) {
-        DisasterGroupDTO updated = disasterGroupService.updateGroup(id, dto);
+    public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody UserDTO dto) {
+        UserDTO updated = UserService.updateUser(id, dto);
         return ResponseEntity.ok(updated);
     }
 
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        disasterGroupService.deleteGroup(id);
+        UserService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
 }

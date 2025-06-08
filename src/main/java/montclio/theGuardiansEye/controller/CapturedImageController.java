@@ -13,48 +13,48 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import montclio.theGuardiansEye.model.dto.DisasterGroupDTO;
-import montclio.theGuardiansEye.service.DisasterGroupService;
+import montclio.theGuardiansEye.model.dto.CapturedImageDTO;
+import montclio.theGuardiansEye.service.CapturedImageService;
 
 @RestController
-@RequestMapping("/disaster-group")
-public class DisasterGroupController {
+@RequestMapping("/captured-image")
+public class CapturedImageController {
 
     @Autowired
-    private DisasterGroupService disasterGroupService;
+    private CapturedImageService CapturedImageService;
 
     
     @GetMapping
-    public ResponseEntity<List<DisasterGroupDTO>> getAll() {
-        List<DisasterGroupDTO> dtos = disasterGroupService.getAllGroups();
+    public ResponseEntity<List<CapturedImageDTO>> getAll() {
+        List<CapturedImageDTO> dtos = CapturedImageService.getAllCapturedImages();
         return ResponseEntity.ok(dtos);
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<DisasterGroupDTO> getById(@PathVariable Long id) {
-        DisasterGroupDTO dto = disasterGroupService.findById(id);
+    public ResponseEntity<CapturedImageDTO> getById(@PathVariable Long id) {
+        CapturedImageDTO dto = CapturedImageService.findById(id);
         return ResponseEntity.ok(dto);
     }
 
     
     @PostMapping
-    public ResponseEntity<DisasterGroupDTO> create(@RequestBody DisasterGroupDTO dto) {
-        DisasterGroupDTO created = disasterGroupService.createGroup(dto);
+    public ResponseEntity<CapturedImageDTO> create(@RequestBody CapturedImageDTO dto) {
+        CapturedImageDTO created = CapturedImageService.createCapturedImage(dto);
         return ResponseEntity.ok(created);
     }
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<DisasterGroupDTO> update(@PathVariable Long id, @RequestBody DisasterGroupDTO dto) {
-        DisasterGroupDTO updated = disasterGroupService.updateGroup(id, dto);
+    public ResponseEntity<CapturedImageDTO> update(@PathVariable Long id, @RequestBody CapturedImageDTO dto) {
+        CapturedImageDTO updated = CapturedImageService.updateCapturedImage(id, dto);
         return ResponseEntity.ok(updated);
     }
 
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        disasterGroupService.deleteGroup(id);
+        CapturedImageService.deleteCapturedImage(id);
         return ResponseEntity.noContent().build();
     }
 }

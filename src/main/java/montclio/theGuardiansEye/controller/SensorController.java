@@ -13,48 +13,48 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import montclio.theGuardiansEye.model.dto.DisasterGroupDTO;
-import montclio.theGuardiansEye.service.DisasterGroupService;
+import montclio.theGuardiansEye.model.dto.SensorDTO;
+import montclio.theGuardiansEye.service.SensorService;
 
 @RestController
-@RequestMapping("/disaster-group")
-public class DisasterGroupController {
+@RequestMapping("/sensor-controller")
+public class SensorController {
 
     @Autowired
-    private DisasterGroupService disasterGroupService;
+    private SensorService SensorService;
 
     
     @GetMapping
-    public ResponseEntity<List<DisasterGroupDTO>> getAll() {
-        List<DisasterGroupDTO> dtos = disasterGroupService.getAllGroups();
+    public ResponseEntity<List<SensorDTO>> getAll() {
+        List<SensorDTO> dtos = SensorService.getAllSensors();
         return ResponseEntity.ok(dtos);
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<DisasterGroupDTO> getById(@PathVariable Long id) {
-        DisasterGroupDTO dto = disasterGroupService.findById(id);
+    public ResponseEntity<SensorDTO> getById(@PathVariable Long id) {
+        SensorDTO dto = SensorService.findById(id);
         return ResponseEntity.ok(dto);
     }
 
     
     @PostMapping
-    public ResponseEntity<DisasterGroupDTO> create(@RequestBody DisasterGroupDTO dto) {
-        DisasterGroupDTO created = disasterGroupService.createGroup(dto);
+    public ResponseEntity<SensorDTO> create(@RequestBody SensorDTO dto) {
+        SensorDTO created = SensorService.createGroupSensor(dto);
         return ResponseEntity.ok(created);
     }
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<DisasterGroupDTO> update(@PathVariable Long id, @RequestBody DisasterGroupDTO dto) {
-        DisasterGroupDTO updated = disasterGroupService.updateGroup(id, dto);
+    public ResponseEntity<SensorDTO> update(@PathVariable Long id, @RequestBody SensorDTO dto) {
+        SensorDTO updated = SensorService.updateSensor(id, dto);
         return ResponseEntity.ok(updated);
     }
 
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        disasterGroupService.deleteGroup(id);
+        SensorService.deleteSensor(id);
         return ResponseEntity.noContent().build();
     }
 }
