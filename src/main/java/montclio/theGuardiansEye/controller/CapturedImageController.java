@@ -26,7 +26,7 @@ import montclio.theGuardiansEye.service.CapturedImageService;
 
 @RestController
 @RequestMapping("/captured-image")
-@Tag(name = "Captured Images", description = "Operações relacionadas às imagens capturadas por sensores ou câmeras.")
+@Tag(name = "Imagens Capturadas", description = "Operações relacionadas às imagens capturadas por sensores ou câmeras.")
 public class CapturedImageController {
 
     @Autowired
