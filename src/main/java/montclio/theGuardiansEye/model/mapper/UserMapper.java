@@ -2,6 +2,7 @@ package montclio.theGuardiansEye.model.mapper;
 
 import montclio.theGuardiansEye.model.dto.UserDTO;
 import montclio.theGuardiansEye.model.entity.UserEntity;
+import montclio.theGuardiansEye.model.enums.UserRole;
 
 public class UserMapper {
 
@@ -15,8 +16,8 @@ public class UserMapper {
             entity.getLastName(),
             entity.getCpf(),
             entity.getPosition(),
-            entity.getRole(),
-            entity.getEmail(),
+            entity.getAuthRole().name(),
+            entity.getUsername(),
             entity.getPassword()
         );
     }
@@ -30,7 +31,7 @@ public class UserMapper {
         entity.setLastName(dto.getLastName());
         entity.setCpf(dto.getCpf());
         entity.setPosition(dto.getPosition());
-        entity.setRole(dto.getRole());
+        entity.setAuthRole(UserRole.valueOf(dto.getRole()));
         entity.setEmail(dto.getEmail());
         entity.setPassword(dto.getPassword());
         return entity;

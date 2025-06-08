@@ -1,9 +1,10 @@
 package montclio.theGuardiansEye.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -11,6 +12,7 @@ import montclio.theGuardiansEye.model.dto.CapturedImageDTO;
 import montclio.theGuardiansEye.model.entity.CapturedImageEntity;
 import montclio.theGuardiansEye.model.mapper.CapturedImageMapper;
 import montclio.theGuardiansEye.model.repository.CapturedImageRepository;
+import montclio.theGuardiansEye.specification.CapturedImageSpecification;
 
 @Service
 public class CapturedImageService  {
@@ -22,11 +24,13 @@ public class CapturedImageService  {
         this.repository = repository;
     }
 
-    public List<CapturedImageDTO> getAllCapturedImages() {
-        return repository.findAll()
-                .stream()
-                .map(CapturedImageMapper::toDTO)
-                .collect(Collectors.toList());
+    public Page<CapturedImageDTO> getAllWithFilters(Long zonaId, String dataInicio, String dataFim, Pageable pageable) {
+        LocalDate start = (dataInicio != null) ? LocalDate.parse(dataInicio) : null;
+        LocalDate end = (dataFim != null) ? LocalDate.parse(dataFim) : null;
+
+        return repository.findAll(
+            CapturedImageSpecification.withFilters(zonaId, start, end), pageable
+        ).map(CapturedImageMapper::toDTO);
     }
 
     public CapturedImageDTO findById(Long id) {

@@ -54,7 +54,7 @@ public class SubgroupDisasterController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        SubgroupService.deleteSubGroup(id);;
+        SubgroupService.deleteSubGroup(id);
         return ResponseEntity.noContent().build();
     }
 }
