@@ -1,2 +1,11 @@
-[phases.build.env]
-JAVA_VERSION = "21"
+[phases.setup.env]
+JAVA_VERSION = "17"
+
+[phases.setup]
+nixPkgs = ["jdk-17", "maven"]
+
+[phases.build]
+cmds = ["mvn -B -DskipTests clean install"]
+
+[start]
+cmd = "java -jar target/seu-app.jar"
