@@ -14,9 +14,9 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 import montclio.theGuardiansEye.model.enums.UserRole;
 
 @Entity
@@ -24,33 +24,36 @@ import montclio.theGuardiansEye.model.enums.UserRole;
 public class UserEntity implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "tb_tge_usuario_seq", sequenceName = "tb_tge_usuario_id_usuario_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_tge_usuario_seq")
     @Column(name = "id_usuario")
     private Long idUser;
 
-    @Column(name = "nome_usuario")
+    @Column(name = "nome_usuario", nullable = false, length = 35)
     private String firstName;
 
-    @Column(name = "sobrenome")
+    @Column(name = "sobrenome", nullable = false, length = 100)
     private String lastName;
 
-    @Column(name = "cpf")
-    @NotNull
+    @Column(name = "cpf", nullable = false)
     private Long cpf;
 
-    @Column(name = "cargo")
+    @Column(name = "cargo", nullable = false, length = 50)
     private String position;
 
-    @Column(name = "funcao")
-    @Enumerated(EnumType.STRING)
-    private UserRole authRole;
+    @Column(name = "funcao", nullable = false, length = 100)
+    private String function;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false, length = 125, unique = true)
     @Email
     private String email;
 
-    @Column(name = "senha")
+    @Column(name = "senha", nullable = false, length = 60)
     private String password;
+
+    @Column(name = "papel", nullable = false, length = 20)
+    @Enumerated(EnumType.STRING)
+    private UserRole authRole;
 
 
     public Long getIdUser() {
@@ -89,12 +92,12 @@ public class UserEntity implements UserDetails {
         this.position = position;
     }
 
-    public UserRole getAuthRole() {
-        return authRole;
+    public String getFunction() {
+        return function;
     }
 
-    public void setAuthRole(UserRole authRole) {
-        this.authRole = authRole;
+    public void setFunction(String function) {
+        this.function = function;
     }
 
     @Override
@@ -115,6 +118,19 @@ public class UserEntity implements UserDetails {
         this.password = password;
     }
 
+    public UserRole getAuthRole() {
+        return authRole;
+    }
+
+    public void setAuthRole(UserRole authRole) {
+        this.authRole = authRole;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_" + authRole.name()));
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -133,11 +149,5 @@ public class UserEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(authRole.name()));
     }
 }

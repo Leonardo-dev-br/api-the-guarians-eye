@@ -14,7 +14,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.annotation.PostConstruct;
 import montclio.theGuardiansEye.model.dto.Token;
 import montclio.theGuardiansEye.model.entity.UserEntity;
-import montclio.theGuardiansEye.model.enums.UserRole;
+import montclio.theGuardiansEye.model.repository.UserRepository;
 
 @Service
 public class TokenService {
@@ -23,10 +23,12 @@ public class TokenService {
     private String jwtSecret;
 
     private Algorithm algorithm;
-    private final Instant expiresAt = LocalDateTime
-        .now()
-        .plusMinutes(120)
-        .toInstant(ZoneOffset.ofHours(-3));
+
+    private final UserRepository userRepository;
+
+    public TokenService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @PostConstruct
     public void init() {
@@ -34,6 +36,10 @@ public class TokenService {
     }
 
     public Token createToken(UserEntity user) {
+        Instant expiresAt = LocalDateTime.now()
+            .plusMinutes(120)
+            .toInstant(ZoneOffset.ofHours(-3));
+
         String jwt = JWT.create()
             .withSubject(user.getIdUser().toString())
             .withClaim("email", user.getUsername())
@@ -49,9 +55,10 @@ public class TokenService {
             .build()
             .verify(token);
 
-        UserEntity user = new UserEntity();
-        user.setEmail(jwt.getClaim("email").asString());
-        user.setAuthRole(UserRole.valueOf(jwt.getClaim("role").asString()));
-        return user;
+        String userIdStr = jwt.getSubject();
+        Long userId = Long.parseLong(userIdStr);
+
+        return userRepository.findById(userId)
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado no token"));
     }
 }

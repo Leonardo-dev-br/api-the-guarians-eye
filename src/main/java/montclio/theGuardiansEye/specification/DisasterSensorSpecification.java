@@ -7,7 +7,7 @@ import org.springframework.data.jpa.domain.Specification;
 import jakarta.persistence.criteria.Predicate;
 import montclio.theGuardiansEye.model.entity.CapturedImageEntity;
 
-public class CapturedImageSpecification {
+public class DisasterSensorSpecification {
 
     public static Specification<CapturedImageEntity> withFilters(Long zonaId, LocalDate dataInicio, LocalDate dataFim) {
         return (root, query, cb) -> {

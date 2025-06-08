@@ -20,7 +20,7 @@ import montclio.theGuardiansEye.service.AuthService;
 import montclio.theGuardiansEye.service.TokenService;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/auth")
 @Tag(name = "Autenticação", description = "Endpoint para login e emissão de token JWT")
 public class AuthController {
 
@@ -37,7 +37,7 @@ public class AuthController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @PostMapping
+    @PostMapping("/login")
     @Operation(summary = "Login do usuário", description = "Valida as credenciais e retorna um token JWT de acesso.")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Login bem-sucedido. Retorna token JWT."),
@@ -54,4 +54,17 @@ public class AuthController {
 
         return tokenService.createToken(user);
     }
+
+    @PostMapping("/register")
+        @Operation(summary = "Registrar novo usuário", description = "Cria um novo usuário e retorna um token JWT.")
+        @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Usuário registrado com sucesso."),
+            @ApiResponse(responseCode = "400", description = "E-mail já cadastrado ou erro de validação.")
+        })
+        public Token register(
+            @Parameter(description = "Dados do novo usuário", required = true)
+            @RequestBody UserEntity user
+        ) {
+            return authService.register(user);
+        }
 }
