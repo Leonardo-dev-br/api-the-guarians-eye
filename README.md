@@ -28,6 +28,7 @@ Desastres naturais como deslizamentos de terra e enchentes causam graves impacto
 ---
 
 ## ✅ Solução Proposta
+O projeto propõe um sistema inteligente que integra sensores IoT e visão computacional para monitorar e classificar riscos ambientais. Sensores coletam dados em tempo real, enquanto drones capturam imagens aéreas processadas por IA. Essas informações são validadas, armazenadas em banco de dados e exibidas em uma dashboard interativa com alertas, mapas e relatórios, apoiando órgãos como a defesa civil na tomada de decisões rápidas e eficazes em situações de emergência.
 
 ### 🛰️ Monitoramento com IoT
 Sensores instalados em áreas de risco coletam:
@@ -92,3 +93,11 @@ java\montclio\theGuardiansEye
 └── TheGuardiansEyeApplication.java ← Classe principal que inicia a API Spring Boot
 
 ## ▶️ Como Executar o Projeto
+1. Executar a classe 
+2. Enviar requisição no login http://localhost:8080/auth/login
+ {
+    "email": "fabio.pimentel@exemplo.com",
+    "password": "senhaFabio2025"
+}
+
+4. Pegar o Token
