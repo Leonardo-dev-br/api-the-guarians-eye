@@ -77,7 +77,6 @@ Gerencia as entidades:
 - `UserEntity`
 
 
-## 🧱 Arquitetura do Projeto
 ## 📁 Estrutura de Pastas
 
 ```text
