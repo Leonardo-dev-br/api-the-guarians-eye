@@ -78,26 +78,101 @@ Gerencia as entidades:
 
 
 ## 🧱 Arquitetura do Projeto
-com.montclio.theGuardiansEye
+## 📁 Estrutura de Pastas
+
+```text
 java\montclio\theGuardiansEye
-├── config                        ← Arquivos de configuração da aplicação (segurança, BD, Autenticação, etc.)
-├── controller                    ← Camada responsável por receber as requisições HTTP (REST Controllers)
+├── config                      ← Arquivos de configuração (segurança, beans, CORS, etc.)
+├── controller                  ← Controladores REST responsáveis pelas rotas da API
 ├── model
-│   ├── dto                       ← Objetos de transferência de dados
-│   ├── entity                    ← Entidades JPA que representam as tabelas no banco de dados
-│   ├── enums                     ← Enumerações utilizadas na aplicação (ex: tipos, estados, perfis)
-│   ├── mapper                    ← Conversores entre entidades e DTOs
-│   └── repository                ← Interfaces do Spring Data JPA para acesso ao banco
-├── service                       ← Camada de regras de negócio (lógica da aplicação)
-├── specification                 ← Implementações de filtros e critérios dinâmicos de consulta com Spring Data JPA (Specification API)
-└── TheGuardiansEyeApplication.java ← Classe principal que inicia a API Spring Boot
+│   ├── dto                     ← Objetos de transferência de dados (Data Transfer Objects)
+│   ├── entity                  ← Entidades JPA mapeadas com o banco de dados
+│   ├── enums                   ← Enumerações com constantes utilizadas no domínio
+│   ├── mapper                  ← Converters entre DTOs e entidades (usualmente com MapStruct ou manual)
+│   └── repository              ← Interfaces de repositório (Spring Data JPA)
+├── service                     ← Regras de negócio e orquestração das operações
+├── specification               ← Filtros e critérios dinâmicos para queries (Specification API)
+└── TheGuardiansEyeApplication.java  ← Classe principal que inicia a aplicação Spring Boot
+
+
+---
+
+## 1. Pré-requisitos
+
+- Java 17+ instalado  
+- Maven instalado  
+- Banco Oracle configurado com:
+  - Tabela `tb_tge_usuario` (coluna `senha VARCHAR2(60)` e `email` único)
+  - Flyway com `spring.flyway.baseline-on-migrate=true` no `application.properties`  
+- Variável de ambiente ou `application.properties` com:
+  ```properties
+  spring.datasource.url=jdbc:oracle:thin:@//<host>:1521/<service>
+  spring.datasource.username=<usuario>
+  spring.datasource.password=<senha>
+
+  jwt.secret=SuaChaveSecretaAqui
+  spring.flyway.baseline-on-migrate=true
+  
 
 ## ▶️ Como Executar o Projeto
-1. Executar a classe 
-2. Enviar requisição no login http://localhost:8080/auth/login
- {
-    "email": "fabio.pimentel@exemplo.com",
-    "password": "senhaFabio2025"
+1. Executar a classe `TheGuardiansEyeApplication`
+2. Testar via Postman / Insomnia -> `http://localhost:8080`
+3.1 Registrar novo usuário
+
+- **Method**: `POST`  
+- **URL**: `http://localhost:8080/auth/register`  
+- **Headers**: `Content-Type: application/json`
+
+- **Body**:
+```json
+{
+  "firstName": "Luciana",
+  "lastName": "Fernandes Rocha",
+  "cpf": 33322211144,
+  "position": "Analista",
+  "function": "Gestão de Desastres",
+  "authRole": "ADMIN",
+  "email": "luciana.rocha@exemplo.com",
+  "password": "senhaLuciana2025"
 }
 
-4. Pegar o Token
+
+**Resposta esperada**:
+```json
+{
+  "token": "<seu_jwt_aqui>",
+  "type": "Bearer",
+  "email": "luciana.rocha@exemplo.com"
+}
+
+
+3.2 Fazer login
+Method: POST
+
+URL: http://localhost:8080/auth/login
+
+Headers:
+Content-Type: application/json
+
+Body:
+```json
+{
+  "email": "luciana.rocha@exemplo.com",
+  "password": "senhaLuciana2025"
+}
+
+Resposta esperada:
+```json
+{
+  "token": "<seu_jwt_aqui>",
+  "type": "Bearer",
+  "email": "luciana.rocha@exemplo.com"
+}
+3.3 Acessar endpoint protegido
+Method: GET
+
+URL: http://localhost:8080/disaster-group
+
+Headers:
+Authorization: Bearer <seu_jwt_aqui>
+
